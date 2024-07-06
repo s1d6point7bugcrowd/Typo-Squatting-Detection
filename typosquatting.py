@@ -98,7 +98,7 @@ def generate_typos(domain):
 
     for i in range(len(domain_name)):
         if domain_name[i] in phonetic_replacements:
-            typos.add(domain_name[:i] + phonetic replacements[domain_name[i]] + domain_name[i + 1:] + '.' + extension)
+            typos.add(domain_name[:i] + phonetic_replacements[domain_name[i]] + domain_name[i + 1:] + '.' + extension)
 
     # Common misspellings
     common_misspellings = {
