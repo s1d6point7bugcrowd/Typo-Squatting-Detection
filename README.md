@@ -35,7 +35,6 @@ Ensure you have Python installed. The script requires the following Python packa
 
 Install the required packages using the following command:
 
-```sh
 pip install requests beautifulsoup4 scikit-learn python-whois dnspython ipwhois colorama
 
 
