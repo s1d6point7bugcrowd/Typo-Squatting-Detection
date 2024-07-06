@@ -97,8 +97,8 @@ def generate_typos(domain):
     }
 
     for i in range(len(domain_name)):
-        if domain_name[i] in phonetic replacements:
-            typos.add(domain_name[:i] + phonetic_replacements[domain_name[i]] + domain_name[i + 1:] + '.' + extension)
+        if domain_name[i] in phonetic_replacements:
+            typos.add(domain_name[:i] + phonetic replacements[domain_name[i]] + domain_name[i + 1:] + '.' + extension)
 
     # Common misspellings
     common_misspellings = {
@@ -219,7 +219,7 @@ def get_ip(domain):
         return None
 
 # Main function to detect typosquatting
-def detect_typosquatting(original_domain):
+def detect_typosquatting(original_domain, threshold):
     original_domain_with_scheme = f"http://{original_domain}"
     original_content = fetch_website_content(original_domain_with_scheme)
     if not original_content:
@@ -261,7 +261,7 @@ def detect_typosquatting(original_domain):
         
         if typo_content:
             similarity_score = calculate_similarity(original_content, typo_content)
-            if similarity_score > 70:
+            if similarity_score > threshold:
                 print(Fore.RED + f"Possible typosquatting detected for domain: {typo_domain}")
                 print(Fore.GREEN + f"IP Address: {typo_ip}")
                 print(Fore.CYAN + f"Origin: {typo_location}")
@@ -285,7 +285,8 @@ def detect_typosquatting(original_domain):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Detect typosquatting domains.")
     parser.add_argument("domain", help="The original domain to check for typosquatting.")
+    parser.add_argument("-t", "--threshold", type=float, default=70.0, help="The content similarity threshold for detecting typosquatting.")
     parser.add_argument("-v", "--verbose", action="store_true", help="Increase output verbosity.")
     args = parser.parse_args()
     
-    detect_typosquatting(args.domain)
+    detect_typosquatting(args.domain, args.threshold)
