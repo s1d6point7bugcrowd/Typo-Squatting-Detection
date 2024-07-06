@@ -4,7 +4,13 @@ This script is designed to detect potential typosquatting domains for a given ta
 
 ## Features
 
-Threshold Argument: Added a new argument -t or --threshold to allow the user to specify the content similarity threshold for detecting typosquatting. The default value is set to 70.0.
+Threshold Argument: Added a new argument -t or --threshold to allow the user to specify the content similarity threshold for detecting typosquatting. The default value is set to 70.0. ## Pulling Updates
+
+To pull the latest updates from the repository, navigate to your local repository directory and use the following command:
+
+```bash
+git pull origin main
+
 
 - **Typo Generation**: Generates potential typos for a given domain using techniques such as omission, swap, insertion, substitution, repetition, and transposition.
 - **Domain Existence and Redirection Checking**: Checks if a generated typo domain exists and if it redirects to another domain.
