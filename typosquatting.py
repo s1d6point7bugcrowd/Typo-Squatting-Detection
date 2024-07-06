@@ -242,10 +242,9 @@ def detect_typosquatting(original_domain):
         typo_domain = f"http://{typo}"
         redirect_url = check_domain(typo_domain)
 
-        # Exclude typos that redirect to the original domain
+        # Skip typos that redirect to the original domain (defensive measure)
         if redirect_url and urlparse(redirect_url).netloc == urlparse(f"https://{original_domain}").netloc:
-            if args.verbose:
-                print(Fore.GREEN + f"Domain {typo_domain} redirects to the original domain {original_domain}, likely acquired defensively.")
+            print(Fore.GREEN + f"Domain {typo_domain} redirects to the original domain {original_domain}, likely acquired defensively.")
             continue
 
         typo_ip = get_ip(typo)
