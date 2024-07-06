@@ -242,10 +242,13 @@ def detect_typosquatting(original_domain):
         typo_domain = f"http://{typo}"
         redirect_url = check_domain(typo_domain)
 
-        # Skip typos that redirect to the original domain (defensive measure)
-        if redirect_url and urlparse(redirect_url).netloc == urlparse(f"https://{original_domain}").netloc:
-            print(Fore.GREEN + f"Domain {typo_domain} redirects to the original domain {original_domain}, likely acquired defensively.")
-            continue
+        # Inform user about defensive acquisition even if redirected
+        if redirect_url and original_domain in redirect_url:
+            message = f"Domain {typo_domain} redirects to the original domain {original_domain}, likely acquired defensively."
+            print(Fore.GREEN + message)
+            if args.verbose:
+                print(Fore.WHITE + f"Checking domain: {typo_domain}")
+            continue  # Skip further processing for this typo
 
         typo_ip = get_ip(typo)
         typo_location = get_geolocation(typo_ip) if typo_ip else None
@@ -256,9 +259,6 @@ def detect_typosquatting(original_domain):
         
         if typo_content:
             similarity_score = calculate_similarity(original_content, typo_content)
-            if args.verbose:
-                print(Fore.WHITE + f"Checking domain: {typo_domain}")
-                print(Fore.WHITE + f"Content similarity score with {original_domain}: {similarity_score:.2f}%")
             if similarity_score > 70:
                 print(Fore.RED + f"Possible typosquatting detected for domain: {typo_domain}")
                 print(Fore.GREEN + f"IP Address: {typo_ip}")
@@ -272,6 +272,9 @@ def detect_typosquatting(original_domain):
                         print(Fore.BLUE + f"SSL Info - Original: {original_ssl}, Typo: {typo_ssl}")
                     if typo_mx_records and original_mx_records:
                         print(Fore.YELLOW + f"MX Records - Original: {original_mx_records}, Typo: {typo_mx_records}")
+            if args.verbose:
+                print(Fore.WHITE + f"Checking domain: {typo_domain}")
+                print(Fore.WHITE + f"Content similarity score with {original_domain}: {similarity_score:.2f}%")
         else:
             if args.verbose:
                 print(Fore.RED + f"Failed to fetch content from {typo_domain}")
