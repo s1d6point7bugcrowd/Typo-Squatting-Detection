@@ -4,6 +4,8 @@ This script is designed to detect potential typosquatting domains for a given ta
 
 ## Features
 
+Threshold Argument: Added a new argument -t or --threshold to allow the user to specify the content similarity threshold for detecting typosquatting. The default value is set to 70.0.
+
 - **Typo Generation**: Generates potential typos for a given domain using techniques such as omission, swap, insertion, substitution, repetition, and transposition.
 - **Domain Existence and Redirection Checking**: Checks if a generated typo domain exists and if it redirects to another domain.
 - **Statistical Text Matching**: Compares the content of the original website and the typo website using a statistical text matching algorithm (TF-IDF cosine similarity).
