@@ -16,7 +16,6 @@ from ipwhois.utils import get_countries
 import urllib3
 from colorama import init, Fore, Style
 import argparse
-import time
 
 # Initialize colorama
 init(autoreset=True)
@@ -140,11 +139,8 @@ def generate_typos(domain):
 
 # Function to fetch website content with enhanced error handling
 def fetch_website_content(url):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-    }
     try:
-        response = requests.get(url, headers=headers, timeout=10, verify=False)  # verify=False to ignore SSL errors
+        response = requests.get(url, timeout=10, verify=False)  # verify=False to ignore SSL errors
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
             # Remove script and style elements
