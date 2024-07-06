@@ -97,7 +97,7 @@ def generate_typos(domain):
     }
 
     for i in range(len(domain_name)):
-        if domain_name[i] in phonetic_replacements:
+        if domain_name[i] in phonetic replacements:
             typos.add(domain_name[:i] + phonetic_replacements[domain_name[i]] + domain_name[i + 1:] + '.' + extension)
 
     # Common misspellings
@@ -149,6 +149,8 @@ def fetch_website_content(url):
             return soup.get_text()
     except requests.RequestException:
         return None
+    except UnicodeDecodeError:
+        return response.content.decode('utf-8', errors='replace')
 
 # Function to calculate similarity using TF-IDF cosine similarity
 def calculate_similarity(content1, content2):
